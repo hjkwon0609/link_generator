@@ -4,6 +4,7 @@ var express = require('express');
 const request = require("request");
 const redis = require('redis').createClient();
 const stable_stringify = require('json-stable-stringify');
+const path = require('path');
 const body_parser = require('body-parser');
 
 // const db = require('./db.js')({
@@ -15,6 +16,7 @@ const router = require('./server.js')({
     express,
     body_parser,
     stable_stringify,
+    path,
 });
 
 const port = process.env.PORT || 4000;
