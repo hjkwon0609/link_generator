@@ -9,7 +9,4 @@ module.exports = function(dependencies) {
         console.log('Redis is dead: ' + err);
     });
 
-
-
-
 };
