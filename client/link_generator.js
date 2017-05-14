@@ -1,6 +1,8 @@
 'use strict';
 
+
 // Create link that has info
+var AP = 500;
 
 var create_link = function(link_owner_pub_key, pub_key, prv_key) {
     API.get_user_object(link_owner_pub_key, function(user) {
@@ -35,3 +37,9 @@ var create_link = function(link_owner_pub_key, pub_key, prv_key) {
 
     });
 };
+
+var request_link = function(block_num, txn_sig, identity) {
+    console.log(block_num);
+}
+
+
