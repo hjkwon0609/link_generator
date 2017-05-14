@@ -1,11 +1,9 @@
 'use strict';
 
-<<<<<<< HEAD
-console.log("Arrived");
 
-var GLOBAL = "this should be in the global space now";
-=======
 // Create link that has info
+
+var AP = 500;
 
 var create_link = function(pub_key, prv_key) {
     API.get_user_object(pub_key, function(user) {
@@ -28,4 +26,9 @@ var create_link = function(pub_key, prv_key) {
 
     });
 };
->>>>>>> aa449bc8e608acac2e360499046e474c990d0a97
+
+var request_link = function(block_num, txn_sig, identity) {
+    console.log(block_num);
+}
+
+
