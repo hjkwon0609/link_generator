@@ -7,16 +7,17 @@ const stable_stringify = require('json-stable-stringify');
 const path = require('path');
 const body_parser = require('body-parser');
 
-// const db = require('./db.js')({
-//     redis,
-//     stable_stringify,
-// });
+const db = require('./db.js')({
+    redis,
+    stable_stringify,
+});
 
 const router = require('./server.js')({
     express,
     body_parser,
     stable_stringify,
     path,
+    db,
 });
 
 const port = process.env.PORT || 4000;

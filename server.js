@@ -5,6 +5,7 @@ module.exports = function(dependencies) {
     const body_parser = dependencies['body_parser'];
     const stable_stringify = dependencies['stable_stringify'];
     const path = dependencies['path'];
+    const db = dependencies['db'];
     const app = express();
 
     app.use(body_parser.urlencoded({
@@ -26,7 +27,7 @@ module.exports = function(dependencies) {
         res.send('Hello World!')
     });
 
-    app.get('/create_link', function(req, res){
+    app.get('/create_link_js', function(req, res){
         res.sendFile(path.join(__dirname, 'client', 'link_generator.js'), function(err) {
             if (err) {
                 console.log(err);
@@ -37,6 +38,44 @@ module.exports = function(dependencies) {
         });
     });
 
+    app.get('/get_user_info', function(req, res){
+        const pub_key = req.query.pub_key;
+
+        db.get_user_info(pub_key).then(function(result){
+            var verified_info = new Map();
+            if (result) {
+                for (let i = 0; i < result.length; i += 2) {
+                    verified_info[result[i]] = result[i + 1];
+                }
+            }
+
+            res.send(stable_stringify(verified_info));
+            res.end();
+        });
+    });
+
+    app.get('/user_info_page/:pub_key', function(req, res) {
+        const pub_key = req.params.pub_key;
+        console.log('<link_generator/server.js/user_info_page>' + pub_key);
+
+        res.sendFile(path.join(__dirname + '/user_info_page.html'));
+    });
+
+    app.post('/add_new_user_info', function(req, res){
+        console.log(req.body);
+        const pub_key = req.body.pub_key;
+        const info_key = req.body.info_key;
+        const info_val = req.body.info_val;
+
+        console.log('<link_generator/server.js/add_ner_user_info>' + pub_key);
+
+        db.save_user_info(pub_key, info_key, info_val).then(function(result){
+            console.log('Saved user info: ' + result);
+            db.get_user_info(pub_key).then(function(user){
+                console.log(user);
+            });
+        });
+    });
 
     const get_app = function () {
         return app;
