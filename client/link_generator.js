@@ -113,6 +113,6 @@ const create_link = function(pub_key){
         }
     });
     // db.link_created_for_user(pub_key);
-    return link_generator_server + "/user_info_page/" + pub_key;
+    return link_generator_server + "/user_info_page/" + encodeURIComponent(pub_key);
 }
 
