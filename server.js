@@ -57,7 +57,7 @@ module.exports = function(dependencies) {
     app.get('/user_info_page/:pub_key', function(req, res) {
         const pub_key = req.params.pub_key;
         console.log('<link_generator/server.js/user_info_page>' + pub_key);
-
+        db.link_viewed(pub_key);
         res.sendFile(path.join(__dirname + '/user_info_page.html'));
     });
 
@@ -74,6 +74,13 @@ module.exports = function(dependencies) {
             db.get_user_info(pub_key).then(function(user){
                 console.log(user);
             });
+        });
+    });
+
+    app.post('/create_new_link', function(req, res){
+        const pub_key = req.body.pub_key;
+        db.link_created_for_user(pub_key).then(function(result){
+            console.log('Created link for user: ' + pub_key);
         });
     });
 

@@ -26,8 +26,68 @@ module.exports = function(dependencies) {
         });
     };
 
+    const link_created_for_user = function(pub_key) {
+        return new Promise(function(resolve, reject){
+            client.hget(pub_key, 'link_generated', function(err, reply){
+                var count = reply;
+                if (count === null){
+                    count = 1;
+                } else {
+                    count++;
+                }
+                client.hset(pub_key, 'link_generated', count, function(err, reply){
+                   resolve(reply);
+                });
+            });
+        });
+    };
+
+    const get_num_links_per_user = function(pub_key) {
+        return new Promise(function(resolve, reject){
+            client.hget(pub_key, 'link_generated', function(err, reply){
+                var count = reply;
+                if (count === null){
+                    count = 0;
+                }
+                resolve(count);
+            });
+        });
+    };
+
+    const link_viewed = function(pub_key) {
+        return new Promise(function(resolve, reject){
+            client.hget(pub_key, 'link_viewed', function(err, reply){
+                var count = reply;
+                if (count === null){
+                    count = 1;
+                } else {
+                    count++;
+                }
+                client.hset(pub_key, 'link_viewed', count, function(err, reply){
+                    resolve(reply);
+                });
+            });
+        });
+    };
+
+    const get_num_links_viewed_per_user = function(pub_key) {
+        return new Promise(function(resolve, reject){
+            client.hget(pub_key, 'link_viewed', function(err, reply){
+                var count = reply;
+                if (count === null){
+                    count = 0;
+                }
+                resolve(count);
+            });
+        });
+    };
+
     return {
         save_user_info,
         get_user_info,
+        link_created_for_user,
+        get_num_links_per_user,
+        link_viewed,
+        get_num_links_viewed_per_user,
     };
 };

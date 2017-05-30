@@ -61,7 +61,7 @@ const answer_request = function(info) {
                             let info_val = info[1];
 
                             $.post({
-                                url : "http://localhost:4000/add_new_user_info",
+                                url : link_generator_server + "/add_new_user_info",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                                 data : {
                                     pub_key,
@@ -92,6 +92,27 @@ const answer_request = function(info) {
 
 const create_link = function(pub_key){
     console.log('<link_generator.js>: ' + pub_key);
-    // return "http://localhost:4000/user_info_page/" ;
+    $.post({
+        url: link_generator_server + "/create_new_link",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        data : {
+            pub_key,
+        },
+        transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+        },
+        success : function(result, status, xhr) {
+            console.log("Successfully fetched txn from the chain");
+            if (result != undefined) {
+                cb(result);
+            }
+            console.log(result);
+        }
+    });
+    // db.link_created_for_user(pub_key);
+    return link_generator_server + "/user_info_page/" + pub_key;
 }
 
