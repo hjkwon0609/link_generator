@@ -15,6 +15,9 @@ module.exports = function(dependencies) {
     app.use(body_parser.json());
 
     app.use(express.static(__dirname + '/client' ));
+    app.use(express.static(__dirname + '/assets' ));
+    app.use(express.static(path.join(__dirname, 'assets')));
+    app.use('/assets', express.static(__dirname + '/assets'));
 
     app.all('*', function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
