@@ -61,7 +61,8 @@ module.exports = function(dependencies) {
         const pub_key = req.params.pub_key;
         console.log('<link_generator/server.js/user_info_page>' + pub_key);
         db.link_viewed(pub_key);
-        res.sendFile(path.join(__dirname + '/user_info_page.html'));
+        // res.sendFile(path.join(__dirname + '/user_info_page.html'));
+        res.sendFile(path.join(__dirname + '/index.html'));
     });
 
     app.post('/add_new_user_info', function(req, res){

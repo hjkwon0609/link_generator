@@ -51,6 +51,29 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 			<script>
+				var httpGetAsync = function() {
+					this.get = function(theUrl, callback) {
+					    var xmlHttp = new XMLHttpRequest();
+					    xmlHttp.onreadystatechange = function() { 
+					        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					            callback(xmlHttp.responseText);
+					    }
+					    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+				    	xmlHttp.send(null);
+					}
+				}
+
+				var client = new httpGetAsync();
+				client.get('http://localhost:4000/create_link_js', function(response) {
+				    // do something with response
+				    // console.log("In here!!!!", response);
+				    // var test2 = response.create_link();
+				    // console.log("test2", test2);
+				    // var test1 = response.request_link();
+				    // console.log("test1", test1);
+				});
+			</script>
+			<script>
 				function move() {
 				  var elem = document.getElementById("myBar");   
 				  var width = 0;
@@ -67,6 +90,5 @@
 				move();
 				setInterval(move, 25000);
 			</script>
-
 	</body>
 </html>

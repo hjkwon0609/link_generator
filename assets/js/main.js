@@ -1,5 +1,3 @@
-var line = new ProgressBar.Line('#container');
-
 (function($) {
 
 	skel.breakpoints({
