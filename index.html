@@ -45,33 +45,52 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
+			<!--<script src="assets/js/jquery.min.js"></script>-->
+            <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 			<script>
-				var httpGetAsync = function() {
-					this.get = function(theUrl, callback) {
-					    var xmlHttp = new XMLHttpRequest();
-					    xmlHttp.onreadystatechange = function() { 
-					        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-					            callback(xmlHttp.responseText);
-					    }
-					    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-				    	xmlHttp.send(null);
-					}
-				}
+//				var httpGetAsync = function() {
+//					this.get = function(theUrl, callback) {
+//					    var xmlHttp = new XMLHttpRequest();
+//					    xmlHttp.onreadystatechange = function() {
+//					        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+//					            callback(xmlHttp.responseText);
+//					    };
+//					    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+//				    	xmlHttp.send(null);
+//					}
+//				};
+//
+//				var client = new httpGetAsync();
+//				client.get('http://localhost:4000/get_user_info', function(response) {
+//				    // do something with response
+//				    // console.log("In here!!!!", response);
+//				    // var test2 = response.create_link();
+//				    // console.log("test2", test2);
+//				    // var test1 = response.request_link();
+//				    // console.log("test1", test1);
+//				});
 
-				var client = new httpGetAsync();
-				client.get('http://localhost:4000/create_link_js', function(response) {
-				    // do something with response
-				    // console.log("In here!!!!", response);
-				    // var test2 = response.create_link();
-				    // console.log("test2", test2);
-				    // var test1 = response.request_link();
-				    // console.log("test1", test1);
+                var pub_key = decodeURIComponent(document.URL.split('/').pop());
+                console.log(pub_key);
+				$.ajax({
+				    type: 'GET',
+                    contentType: "application/json; charset=utf-8",
+				    url: '/get_user_info',
+                    dataType: "json",
+					data: {
+				        pub_key
+					},
+                    success: function(result, status, xhr){
+				        console.log('Got user data');
+				        console.log(result);
+                    }
 				});
+
 			</script>
 			<script>
 				function move() {

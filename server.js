@@ -43,16 +43,15 @@ module.exports = function(dependencies) {
 
     app.get('/get_user_info', function(req, res){
         const pub_key = req.query.pub_key;
+        console.log('<server.js>:' + pub_key);
 
         db.get_user_info(pub_key).then(function(result){
-            var verified_info = new Map();
-            if (result) {
-                for (let i = 0; i < result.length; i += 2) {
-                    verified_info[result[i]] = result[i + 1];
-                }
-            }
-
-            res.send(stable_stringify(verified_info));
+            // let verified_info = new Map();
+            // if (result) {
+            //     verified_info = result;
+            // }
+            console.log(result);
+            res.send(stable_stringify(result));
             res.end();
         });
     });
