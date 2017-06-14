@@ -18,7 +18,7 @@
 				<h1>Your request is being verified...</h1>
 				<!--include loading bar-->
 				<div style="height:20px;"></div>
-				<div class="w3-light-grey" style="width:50%; position:absolute; left:25%;">
+				<div id="loadBar" class="w3-light-grey" style="width:50%; position:absolute; left:25%;">
 					<div id="myBar" class="w3-container w3-green" style="height:34px; width:0%"></div>
 				</div>
 				<br>
@@ -51,6 +51,7 @@
                 console.log("Here");
                 var pub_key = decodeURIComponent(document.URL.split('/').pop());
                 console.log(pub_key);
+                var returnedUser = {};
                 $.ajax({
                     type: 'GET',
                     contentType: "application/json; charset=utf-8",
@@ -62,8 +63,12 @@
                     success: function(result, status, xhr){
                         console.log('Got user data');
                         console.log(result);
+                        document.getElementById("loadBar").innerHTML = result;
+                        returnedUser = result;
                     }
                 });
+                console.log(returnedUser);
+
             </script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
